@@ -1,0 +1,40 @@
+databases:
+  - name: perfume-shop-db
+    databaseName: perfume_shop
+    user: perfume_admin
+
+services:
+  - type: web
+    name: perfume-shop-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm run db:init && npm run db:import-legacy && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: perfume-shop-db
+          property: connectionString
+      - key: DATABASE_SSL
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: perfume-shop/products

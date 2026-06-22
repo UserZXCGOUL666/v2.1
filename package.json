@@ -1,0 +1,19 @@
+{
+  "name": "perfume-miniapp-production-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Perfume storefront, production backend and separate admin panel",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install && npm --prefix admin install",
+    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\" \"npm --prefix admin run dev\"",
+    "build": "npm --prefix frontend run build && npm --prefix admin run build",
+    "check": "npm --prefix backend run check && npm run build",
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
